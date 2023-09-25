@@ -1,5 +1,13 @@
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import routesConfig from './routes/routesConfig'
+
 const App = () => {
-    return <h1>Mes projets OpenClassrooms</h1>
+    const router = createBrowserRouter(routesConfig)
+    return (
+        <>
+            <RouterProvider router={router} />
+        </>
+    )
 }
 
 export default App
