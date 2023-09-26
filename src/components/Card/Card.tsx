@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { dataFormat } from '../types/dataTypes'
+import { dataFormat } from '../../types/dataTypes'
 import { Navigate } from 'react-router-dom'
 
-import styles from '../style/Card.module.css'
+import styles from './Card.module.css'
 
 const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
     const {
@@ -20,7 +20,7 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
 
     const [navigate, setNavigate] = useState(false)
     return (
-        <div onClick={() => setNavigate(true)}>
+        <article className={styles.article} onClick={() => setNavigate(true)}>
             {navigate && <Navigate to={`project/${id}`} replace={true} />}
             <h3>nom : {name}</h3>
             <img src={illus} alt={name} className={styles.image}/>
@@ -38,7 +38,7 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
             <br />
             <a href={repo}>lien vers le repo</a>
             <div>{comment}</div>
-        </div>
+        </article>
     )
 }
 

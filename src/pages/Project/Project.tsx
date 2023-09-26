@@ -4,6 +4,8 @@ import { projectsAtom } from '../../main'
 import { useAtom } from 'jotai'
 import { dataFormat } from '../../types/dataTypes'
 
+// import styles from './Project.module.css'
+
 export const Project: React.FC = () => {
     const [projects] = useAtom(projectsAtom)
 

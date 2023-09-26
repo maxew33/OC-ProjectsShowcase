@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
+.image {
+  max-width: 50vw;
+  object-fit: contain;
+}
+
+.article {
+  margin: 0 auto;
+  background: #EBEBEB;
+}

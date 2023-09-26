@@ -6,6 +6,7 @@ import { projectsAtom } from './main'
 import { useEffect, useState } from 'react'
 
 import CallData from './CallData/CallData'
+import Header from './components/Header/Header'
 
 const App = () => {
     const [projects, setProjects] = useAtom(projectsAtom)
@@ -30,7 +31,12 @@ const App = () => {
         console.log(123, projects)
     }, [])
 
-    return <>{dataFetched && <Outlet />}</>
+    return (
+        <>
+            <Header />
+            {dataFetched && <Outlet />}
+        </>
+    )
 }
 
 export default App

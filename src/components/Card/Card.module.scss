@@ -1,0 +1,11 @@
+@import '../../scss/utils/variables';
+
+.image{
+    max-width: 50vw;
+    object-fit: contain;
+}
+
+.article{
+    margin: 0 auto;
+    background: $light-grey;
+}
