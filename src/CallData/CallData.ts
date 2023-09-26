@@ -1,15 +1,15 @@
 import { data } from "../__mocks__/store"
 
 export default class CallData{
-    // private _url: string
+    private _url: string
 
-    // constructor(url: string) {
-    //     this._url = url
-    // }
+    constructor(url: string) {
+        this._url = url
+    }
 
     async getProjectsData() {
         return import.meta.env.PROD
-            ? (console.log('get data from db'))
+            ? (console.log('get data from db:' + this._url))
             : data
     }
 }
