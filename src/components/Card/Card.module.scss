@@ -1,11 +1,46 @@
 @import '../../scss/utils/variables';
 
 .image{
-    max-width: 50vw;
+    max-width: 80%;
     object-fit: contain;
+    margin: 1rem auto;
 }
 
 .article{
-    margin: 0 auto;
     background: $light-grey;
+    border-radius: 1rem;
+    max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    margin: 2rem auto;
+
+    header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    h3{
+        font-family: $font2;
+        font-size: 2.5rem;
+    }
+
+    a>*{
+        font-size: 2rem;
+        color: black;
+        margin: 0 .25rem;
+    }
+
+    footer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-family: $font1;
+
+        span{
+            margin: 0 .75rem;
+        }
+    }
 }
