@@ -2,7 +2,8 @@ export const data = [
     {
         id:'001',
         name: 'Booki',
-        illus: 'src/assets/img/p1-snap.png',
+        illus: '/src/assets/img/p1-snap.png',
+        closeup: '/src/assets/img/p1-closeup.png',
         techno: ['html', 'css'],
         description:
             "intégrer la page d'une plateforme de réservation de vacances",
@@ -18,7 +19,8 @@ export const data = [
     {
         id:'002',
         name: 'P\'tits plats',
-        illus: 'src/assets/img/p2-snap.png',
+        illus: '/src/assets/img/p2-snap.png',
+        closeup: '/src/assets/img/p2-closeup.png',
         techno: ['html', 'css'],
         description:
             "intégrer la page d'une plateforme de réservation de vacances",
@@ -34,8 +36,9 @@ export const data = [
     {
         id:'003',
         name: 'Design',
-        illus: 'src/assets/img/p1-snap.png',
-        techno: ['figma'],
+        illus: '/src/assets/img/p1-snap.png',
+        closeup: '/src/assets/img/p1-closeup.png',
+        techno: ['figma', 'react'],
         description:
             "intégrer la page d'une plateforme de réservation de vacances",
         purpose: ['Transformer une maquette en site'],

@@ -1,7 +1,54 @@
+@import '../../scss/utils/variables';
+
+.filters {
+  font-family: $font2;
+
+  font-size: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  margin: 1.5rem auto;
+
+    input {
+        display: none;
+    }
+
+    label {
+      font-size: 1.25rem;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+}
+
+.filtersWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.unchecked {
+    &::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: $purple;
+        top: 50%;
+        left: 0;
+        transform: rotate(-10deg);
+    }
+}
+
 .projects {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     max-width: 1600px;
     margin: 0 auto;
-  }
+    cursor: pointer;
+}

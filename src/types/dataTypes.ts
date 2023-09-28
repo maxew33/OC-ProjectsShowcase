@@ -3,6 +3,7 @@ export interface dataFormat {
     id:string
     name: string
     illus: string
+    closeup: string
     techno: string[]
     description: string
     purpose: string[]

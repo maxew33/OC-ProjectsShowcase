@@ -13,6 +13,7 @@ export const Project: React.FC = () => {
         id: '',
         name: '',
         illus: '',
+        closeup:'',
         techno: [''],
         description: '',
         purpose: [''],
@@ -31,15 +32,40 @@ export const Project: React.FC = () => {
     // find the right project
     useEffect(() => {
         const idProject = projects.find((elt) => elt.id === projectId)
-        console.log(idProject, projects)
+        console.log(idProject, projects, project.closeup)
         idProject ? setProject(idProject) : navigate('/error')
     }, [navigate, projectId, projects])
 
     return (
         <>
-            <div>Project</div>
-
-            <div>{project.name}</div>
+            <main>
+                <div className="presentation">
+                    <h3 className="title">{project.name}</h3>
+                    <img src={project.closeup} alt={project.name} />
+                </div>
+                <div className="description">
+                    <article>
+                        <div className="section">Description</div>
+                        <p className="content">{project.description}</p>
+                    </article>
+                    <article>
+                        <div className="section">Objectif</div>
+                        <p className="content">{project.purpose}</p>
+                    </article>
+                    <article>
+                        <div className="section">Compétences</div>
+                        <p className="content">{project.skills}</p>
+                    </article>
+                    <article>
+                        <div className="section">Evaluation</div>
+                        <p className="content">{project.comment}</p>
+                    </article>
+                    <article>
+                        <div className="section">Liens</div>
+                        <p className="content">{project.links}</p>
+                    </article>
+                </div>
+            </main>
 
             <Link to="/">back to home</Link>
         </>

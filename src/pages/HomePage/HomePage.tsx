@@ -6,6 +6,10 @@ import Card from '../../components/Card/Card'
 import styles from './HomePage.module.css'
 
 const HomePage: React.FC = () => {
+    interface FiltersType {
+        [key: string]: boolean
+    }
+
     const [projects] = useAtom(projectsAtom)
 
     const [filters, setFilters] = useState<string[]>([])
@@ -14,17 +18,10 @@ const HomePage: React.FC = () => {
 
     const [allChecked, setAllChecked] = useState(true)
 
-    interface FiltersType {
-        [key: string]: boolean;
-    }
-
-    // const allTech : string[] = []
-
     const [allTech, setAllTech] = useState<string[]>([])
 
     useEffect(() => {
         projects.forEach((project) => {
-            console.log(project.techno)
             project.techno.forEach((tech) => {
                 setAllTech((prevTech) => {
                     if (!prevTech.includes(tech)) {
@@ -43,12 +40,13 @@ const HomePage: React.FC = () => {
         })
 
         setFilters(allTech)
-    }, [])
+    }, [allTech, projects])
 
-    const changeFilters = (tech: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(tech.target.id)
+    const changeFilters = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFiltersChecked((prevFiltersChecked) => ({
-             ...prevFiltersChecked , [tech.target.id]: !prevFiltersChecked[tech.target.id] }))
+            ...prevFiltersChecked,
+            [e.target.id]: !prevFiltersChecked[e.target.id],
+        }))
     }
 
     const changeAllFilters = () => {
@@ -63,44 +61,58 @@ const HomePage: React.FC = () => {
             })
         }
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         const tmpFilters = []
 
         let all = true
 
         for (const key in filtersChecked) {
-            filtersChecked[key] === true ? tmpFilters.push(key) : all = false
+            filtersChecked[key] === true ? tmpFilters.push(key) : (all = false)
         }
 
         setAllChecked(all)
 
         setFilters(tmpFilters)
-    },[filtersChecked])
+    }, [filtersChecked])
 
     return (
         <>
             <section className={styles.filters}>
                 Filtres
-                <span>
-                    <input
-                        type="checkbox"
-                        name="all"
-                        id="all"
-                        checked={allChecked}
-                        onChange={changeAllFilters}
-                    />
-                    <label htmlFor="all">Tous</label>
+                <span className={styles.filtersWrapper}>
+                    <span>
+                        <input
+                            type="checkbox"
+                            name="all"
+                            id="all"
+                            // checked={allChecked}
+                            onChange={changeAllFilters}
+                        />
+                        <label
+                            htmlFor="all"
+                            className={allChecked ? '' : styles.unchecked}
+                        >
+                            Tous
+                        </label>
+                    </span>
                     {allTech.map((tech, idx) => (
                         <span key={`tech${idx}`}>
                             <input
                                 type="checkbox"
                                 name={tech}
                                 id={tech}
-                                checked={filtersChecked[tech]}
-                                onChange={(tech) => changeFilters(tech)}
+                                // checked={filtersChecked[tech]}
+                                onChange={changeFilters}
                             />
-                            <label htmlFor={tech}>{tech}</label>
+                            <label
+                                htmlFor={tech}
+                                className={
+                                    filtersChecked[tech] ? '' : styles.unchecked
+                                }
+                            >
+                                {tech}
+                            </label>
                         </span>
                     ))}
                 </span>

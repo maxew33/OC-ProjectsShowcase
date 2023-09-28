@@ -19,14 +19,7 @@ import {
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink'
 
 const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
-    const {
-        id,
-        name,
-        illus,
-        techno,
-        link,
-        repo,
-    } = project
+    const { id, name, illus, techno, link, repo } = project
 
     const [navigate, setNavigate] = useState(false)
 
@@ -70,10 +63,8 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
 
             <footer>
                 {techno?.map((tech, idx) => (
-                    <span key={`tech${idx}`}>                        
-                        {renderTech(tech)}
-                        {' '}
-                        {tech}
+                    <span key={`tech${idx}`}>
+                        {renderTech(tech)} {tech}
                     </span>
                 ))}
             </footer>

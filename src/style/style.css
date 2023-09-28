@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -51,4 +51,15 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}/*# sourceMappingURL=style.css.map */
+}
+
+html {
+  background: #EBEBEB;
+}
+
+body {
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: auto;
+  background: #fff;
+}
