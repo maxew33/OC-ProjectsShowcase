@@ -2,7 +2,7 @@ export const data = [
     {
         id:'001',
         name: 'Booki',
-        illus: '/src/assets/img/p1-snap.png',
+        illustration: '/src/assets/img/p1-snap.png',
         closeup: '/src/assets/img/p1-closeup.png',
         techno: ['html', 'css'],
         description:
@@ -14,12 +14,12 @@ export const data = [
         ],
         link: 'https://maxew33.github.io/OC-P2-Booki/',
         repo: 'https://github.com/maxew33/OC-P2-Booki',
-        comment: "commentaire reçu lors de l'évaluation de booki.",
+        comment: ["commentaire reçu lors de l'évaluation de booki."],
     },
     {
         id:'002',
         name: 'P\'tits plats',
-        illus: '/src/assets/img/p2-snap.png',
+        illustration: '/src/assets/img/p2-snap.png',
         closeup: '/src/assets/img/p2-closeup.png',
         techno: ['html', 'css'],
         description:
@@ -31,12 +31,12 @@ export const data = [
         ],
         link: 'https://maxew33.github.io/OC-P2-Booki/',
         repo: 'https://github.com/maxew33/OC-P2-Booki',
-        comment: "commentaire reçu lors de l'évaluation de booki.",
+        comment: ["commentaire reçu lors de l'évaluation de booki."],
     },
     {
         id:'003',
         name: 'Design',
-        illus: '/src/assets/img/p1-snap.png',
+        illustration: '/src/assets/img/p1-snap.png',
         closeup: '/src/assets/img/p1-closeup.png',
         techno: ['figma', 'react'],
         description:
@@ -48,6 +48,6 @@ export const data = [
         ],
         link: 'https://maxew33.github.io/OC-P2-Booki/',
         repo: 'https://github.com/maxew33/OC-P2-Booki',
-        comment: "commentaire reçu lors de l'évaluation de booki.",
+        comment: ["commentaire reçu lors de l'évaluation de booki."],
     },
 ]

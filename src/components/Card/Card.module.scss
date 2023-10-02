@@ -6,19 +6,36 @@
     margin: 1rem auto;
 }
 
+.closeup{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    left: 0;
+}
+
 .article{
+    position: relative;
     background: $light-grey;
     border-radius: 1rem;
     max-width: 40%;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 3rem 1.5rem 1rem;
     margin: 2rem auto;
 
     header{
+        position: absolute;
+        top: 1rem;
+        width: calc(100% - 3rem);
         display: flex;
         align-items: center;
         justify-content: space-between;
+        z-index: 2;
+    }
+
+    .headerLink{
+        flex: 1;
     }
 
     h3{
@@ -31,7 +48,7 @@
         color: black;
         margin: 0 .25rem;
     }
-
+    
     footer{
         display: flex;
         align-items: center;

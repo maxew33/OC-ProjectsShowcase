@@ -10,7 +10,7 @@ const routesConfig = [
         element: <App />,
         errorElement: <ErrorPage />,
         children: [
-            { path: '/', element: <HomePage /> },
+            { path: '', element: <HomePage /> },
             {
                 path: '/admin',
                 element: <Admin />,

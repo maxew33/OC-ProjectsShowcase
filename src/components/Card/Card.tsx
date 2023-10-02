@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { dataFormat } from '../../types/dataTypes'
-import { Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import styles from './Card.module.css'
 
@@ -19,9 +19,7 @@ import {
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink'
 
 const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
-    const { id, name, illus, techno, link, repo } = project
-
-    const [navigate, setNavigate] = useState(false)
+    const { id, name, illustration, techno, link, repo } = project
 
     const renderTech = (tech: string) => {
         switch (tech) {
@@ -45,10 +43,12 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
     }
 
     return (
-        <article className={styles.article} onClick={() => setNavigate(true)}>
-            {navigate && <Navigate to={`project/${id}`} replace={true} />}
+        <article className={styles.article}>
+            <Link to={`project/${id}`} className={styles.closeup} />
             <header>
-                <h3>{name}</h3>
+                <Link to={`project/${id}`}  className={styles.headerLink} >
+                    <h3>{name}</h3>
+                </Link>
                 <span className="links">
                     <a href={link}>
                         <FontAwesomeIcon icon={faLink} />
@@ -59,7 +59,7 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
                 </span>
             </header>
 
-            <img src={illus} alt={name} className={styles.image} />
+            <img src={illustration} alt={name} className={styles.image} />
 
             <footer>
                 {techno?.map((tech, idx) => (
@@ -68,15 +68,6 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
                     </span>
                 ))}
             </footer>
-            {/* <div>{description}</div>
-            {purpose?.map((goal, idx) => (
-                <div key={`purpose${idx}`}>{goal}</div>
-            ))}
-            {skills?.map((skill, idx) => (
-                <div key={`skills${idx}`}>{skill}</div>
-            ))} */}
-
-            {/* <div>{comment}</div> */}
         </article>
     )
 }

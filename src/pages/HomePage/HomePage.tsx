@@ -6,6 +6,7 @@ import Card from '../../components/Card/Card'
 import styles from './HomePage.module.css'
 
 const HomePage: React.FC = () => {
+
     interface FiltersType {
         [key: string]: boolean
     }

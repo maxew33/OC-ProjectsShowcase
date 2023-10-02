@@ -1,15 +1,26 @@
-import { data } from "../__mocks__/store"
+import { collection, getDocs } from 'firebase/firestore'
+import { data } from '../__mocks__/store'
+import { db } from '../config/firebase'
+import { dataFormat } from '../types/dataTypes'
 
-export default class CallData{
-    private _url: string
-
-    constructor(url: string) {
-        this._url = url
-    }
+export default class CallData {
 
     async getProjectsData() {
-        return import.meta.env.PROD
-            ? (console.log('get data from db:' + this._url))
-            : data
+        if (import.meta.env.DEV) {
+            const projectsCollectionRef = collection(db, 'projects')
+            console.log(projectsCollectionRef)
+
+            try {
+                const myData = await getDocs(projectsCollectionRef)
+                const filteredData = myData.docs.map(doc => ({...doc.data(), id: doc.id})) as dataFormat[]
+
+                return filteredData
+
+            } catch (err) {
+                console.error(err)
+            }
+        } else {
+            return data
+        }
     }
 }

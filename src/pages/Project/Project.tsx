@@ -4,7 +4,7 @@ import { projectsAtom } from '../../main'
 import { useAtom } from 'jotai'
 import { dataFormat } from '../../types/dataTypes'
 
-// import styles from './Project.module.css'
+import styles from './Project.module.css'
 
 export const Project: React.FC = () => {
     const [projects] = useAtom(projectsAtom)
@@ -13,7 +13,7 @@ export const Project: React.FC = () => {
         id: '',
         name: '',
         illus: '',
-        closeup:'',
+        closeup: '',
         techno: [''],
         description: '',
         purpose: [''],
@@ -21,8 +21,7 @@ export const Project: React.FC = () => {
         link: '',
         repo: '',
         comment: '',
-    }
-)
+    })
     //get project id from url
     const params = useParams()
     const projectId = params.projectId
@@ -32,18 +31,19 @@ export const Project: React.FC = () => {
     // find the right project
     useEffect(() => {
         const idProject = projects.find((elt) => elt.id === projectId)
-        console.log(idProject, projects, project.closeup)
         idProject ? setProject(idProject) : navigate('/error')
     }, [navigate, projectId, projects])
 
     return (
         <>
-            <main>
-                <div className="presentation">
+        <Link to="/" className={styles.back}>Retour à l'accueil</Link>
+            <main className={styles.projectWrapper}>
+                <section className={styles.presentation}>
                     <h3 className="title">{project.name}</h3>
                     <img src={project.closeup} alt={project.name} />
-                </div>
-                <div className="description">
+                </section>
+
+                <section className={styles.description}>
                     <article>
                         <div className="section">Description</div>
                         <p className="content">{project.description}</p>
@@ -62,12 +62,10 @@ export const Project: React.FC = () => {
                     </article>
                     <article>
                         <div className="section">Liens</div>
-                        <p className="content">{project.links}</p>
+                        <p className="content">{project.link}</p>
                     </article>
-                </div>
+                </section>
             </main>
-
-            <Link to="/">back to home</Link>
         </>
     )
 }

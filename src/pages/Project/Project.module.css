@@ -1,5 +1,62 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
-.article {
-  margin: 0 auto;
+.back {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  font-style: italic;
+  font-family: "Libre Bodoni", serif;
+  font-size: 1.25rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-bottom: 3rem;
+}
+
+.projectWrapper {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
+  width: 100%;
+}
+
+.presentation {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.presentation h3 {
+  font-family: "Libre Bodoni", serif;
+  font-size: 2rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+.presentation img {
+  min-width: 80%;
+}
+
+.description {
+  width: 35%;
   background: #EBEBEB;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.description article {
+  margin: 1rem 2rem;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.description article div {
+  font-family: "Libre Bodoni", serif;
+  font-size: 1.5rem;
+}
+.description article p {
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
 }

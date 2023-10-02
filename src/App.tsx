@@ -16,19 +16,17 @@ const App = () => {
     useEffect(() => {
         const fecthData = async () => {
             if (!dataFetched) {
-                const url = import.meta.env.DB_URI ?? ''
-                const callData = new CallData(url)
+                const callData = new CallData()
 
                 const projectsData = await callData.getProjectsData()
 
                 projectsData && setProjects([...projects, ...projectsData])
             }
             setDataFetched(true)
-            console.log('data fetched')
         }
         fecthData()
 
-        console.log(123, projects)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

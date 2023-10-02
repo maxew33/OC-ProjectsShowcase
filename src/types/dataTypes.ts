@@ -1,8 +1,8 @@
 export interface dataFormat {
     [key: string]: string | string[]
-    id:string
+    id: string
     name: string
-    illus: string
+    illustration: string
     closeup: string
     techno: string[]
     description: string
@@ -10,5 +10,5 @@ export interface dataFormat {
     skills: string[]
     link: string
     repo: string
-    comment: string
+    comment: string[]
 }
