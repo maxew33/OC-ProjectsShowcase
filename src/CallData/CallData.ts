@@ -8,7 +8,6 @@ export default class CallData {
     async getProjectsData() {
         if (import.meta.env.DEV) {
             const projectsCollectionRef = collection(db, 'projects')
-            console.log(projectsCollectionRef)
 
             try {
                 const myData = await getDocs(projectsCollectionRef)

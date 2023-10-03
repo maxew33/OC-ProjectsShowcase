@@ -12,3 +12,10 @@ export interface dataFormat {
     repo: string
     comment: string[]
 }
+
+
+export interface dataEntry {
+    name: string
+    display: string
+    type: string
+}
