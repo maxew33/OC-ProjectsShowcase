@@ -1,8 +1,9 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, Fragment, useEffect, useState } from 'react'
 import { dataConfigAtom, projectsAtom } from '../../main'
 import { useAtom } from 'jotai'
 import { dataEntry } from '../../types/dataTypes'
 import AddModale from '../../components/AddModale/AddModale'
+import { Link } from 'react-router-dom'
 
 const Admin: React.FC = () => {
     const [projects] = useAtom(projectsAtom)
@@ -42,13 +43,14 @@ const Admin: React.FC = () => {
     return (
         <>
         {addModale && <AddModale close={displayModale} />}
+        <Link to="/">back to home</Link>
             <h1>Admin</h1>
             <button onClick={displayModale}>Nouveau Projet</button>
             {projectsData.map((project, index) => (
                 <form key={'project' + index}>
                     {dataConfig.map((entry, idx) => (
-                        <>
-                            <span key={'project' + index + 'entry' + idx}>
+                        <Fragment key={'project' + index + 'entry' + idx} >
+                            <span>
                                 {entry.type === 'string' ? (
                                     <>
                                         <label htmlFor={entry.name + index}>
@@ -104,7 +106,7 @@ const Admin: React.FC = () => {
                                 )}
                             </span>
                             <br />
-                        </>
+                        </Fragment>
                     ))}
                 </form>
             ))}

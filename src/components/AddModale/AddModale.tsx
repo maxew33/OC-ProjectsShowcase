@@ -1,45 +1,49 @@
 import { useAtom } from 'jotai'
-import React, { FormEvent, useEffect, useState } from 'react'
-import { dataConfigAtom } from '../../main'
+import React, { FormEvent, Fragment, useState } from 'react'
+import { dataConfigAtom, projectsAtom } from '../../main'
 import { dataFormat, dataEntry } from '../../types/dataTypes'
+import { v4 as uuidv4 } from 'uuid'
 
-const AddModale: React.FC<{ close: (e: React.FormEvent) => void }> = (
+const AddModale: React.FC<{ close: () => void }> = (
     props
 ) => {
     const [dataConfig] = useAtom(dataConfigAtom)
+    const [projects, setProjects] = useAtom(projectsAtom)
 
     const [newProject, setNewProject] = useState<dataFormat>({
         id: '',
         name: '',
         illustration: '',
         closeup: '',
-        techno: [""],
+        techno: [''],
         description: '',
-        purpose: [""],
-        skills: [""],
+        purpose: [''],
+        skills: [''],
         link: '',
         repo: '',
-        comment: [""],
+        comment: [''],
     })
 
     const handleInputString = (e: FormEvent, entry: dataEntry) => {
         const target = e.target as HTMLFormElement
-        console.log(target.value, entry.name)
-
-        const tmpProjectsData = {...newProject, [entry.name]: target.value}
+        const tmpProjectsData = { ...newProject, [entry.name]: target.value }
 
         // Mettez à jour l'état projectsData avec la nouvelle valeur
         setNewProject(tmpProjectsData)
     }
 
-    useEffect(()=>{console.log(newProject)},[newProject])
-
-    const handleInputArray = (e: FormEvent, entry: dataEntry, index: number) => {
+    const handleInputArray = (
+        e: FormEvent,
+        entry: dataEntry,
+        index: number
+    ) => {
         const target = e.target as HTMLFormElement
-        console.log(target.value, entry.name, index)
         const tmpProjectsArray = [...newProject[entry.name]]
         tmpProjectsArray[index] = target.value
-        const tmpProjectsData = {...newProject, [entry.name]: tmpProjectsArray}
+        const tmpProjectsData = {
+            ...newProject,
+            [entry.name]: tmpProjectsArray,
+        }
 
         // Mettez à jour l'état projectsData avec la nouvelle valeur
         setNewProject(tmpProjectsData)
@@ -47,11 +51,36 @@ const AddModale: React.FC<{ close: (e: React.FormEvent) => void }> = (
 
     const handleNewValue = (e: FormEvent, entry: dataEntry) => {
         e.preventDefault()
-        console.log('new value')
         const tmpProjectsArray = [...newProject[entry.name]]
         tmpProjectsArray.push('')
-        const tmpProjectsData = {...newProject, [entry.name]: tmpProjectsArray}
+        const tmpProjectsData = {
+            ...newProject,
+            [entry.name]: tmpProjectsArray,
+        }
         setNewProject(tmpProjectsData)
+    }
+
+    const handleDeleteValue = (
+        e: FormEvent,
+        entry: dataEntry,
+        index: number
+    ) => {
+        e.preventDefault()
+        console.log('delete value', index)
+        const tmpProjectsArray = [...newProject[entry.name]]
+        tmpProjectsArray.splice(index, 1)
+        const tmpProjectsData = {
+            ...newProject,
+            [entry.name]: tmpProjectsArray,
+        }
+        console.log(tmpProjectsData)
+        setNewProject(tmpProjectsData)
+    }
+
+    const addProject = () => {
+        console.log('project added')
+        setProjects([...projects, { ...newProject, id: uuidv4() }])
+        props.close()
     }
 
     return (
@@ -59,8 +88,8 @@ const AddModale: React.FC<{ close: (e: React.FormEvent) => void }> = (
             <h2>nouveau projet : </h2>
             <form>
                 {dataConfig.map((entry, idx) => (
-                    <>
-                        <span key={'entry-modale' + idx}>
+                    <Fragment key={'entry-modale' + idx}>
+                        <span>
                             {entry.type === 'string' ? (
                                 <>
                                     <label htmlFor={'modale' + entry.name}>
@@ -70,38 +99,66 @@ const AddModale: React.FC<{ close: (e: React.FormEvent) => void }> = (
                                         type="text"
                                         name={'modale' + entry.name}
                                         id={'modale' + entry.name}
-                                        onInput={(e) => handleInputString(e, entry)}
+                                        value={newProject[entry.name]}
+                                        onInput={(e) =>
+                                            handleInputString(e, entry)
+                                        }
                                     />
                                 </>
                             ) : (
                                 <span>
                                     {entry.display}
                                     {Array.isArray(newProject[entry.name]) &&
-                                        (newProject[entry.name] as string[]).map(
-                                            (elt: string, idx: number) => (
+                                        (
+                                            newProject[entry.name] as string[]
+                                        ).map((elt: string, idx: number) => (
+                                            <Fragment
+                                                key={
+                                                    'newProject' + 'Entry' + idx
+                                                }
+                                            >
                                                 <input
                                                     type="text"
-                                                    placeholder={elt}
-                                                    key={
-                                                        'newProject' +
-                                                        'Entry' +
-                                                        idx
-                                                    }
                                                     onInput={(e) =>
-                                                        handleInputArray(e, entry, idx)
+                                                        handleInputArray(
+                                                            e,
+                                                            entry,
+                                                            idx
+                                                        )
                                                     }
+                                                    value={elt}
                                                 />
-                                            )
-                                        )}
-                                        <button onClick={(e) => handleNewValue(e, entry)}>+</button>
+                                                <button
+                                                    onClick={(e) =>
+                                                        handleDeleteValue(
+                                                            e,
+                                                            entry,
+                                                            idx
+                                                        )
+                                                    }
+                                                >
+                                                    X
+                                                </button>
+                                                <br />
+                                            </Fragment>
+                                        ))}
+                                    <button
+                                        onClick={(e) =>
+                                            handleNewValue(e, entry)
+                                        }
+                                    >
+                                        +
+                                    </button>
                                 </span>
                             )}
                         </span>
                         <br />
-                    </>
+                    </Fragment>
                 ))}
             </form>
-            <button onClick={props.close}>OK</button>
+            <button onClick={props.close}>Cancel</button>
+
+            <button onClick={addProject}>OK</button>
         </div>
     )
 }
