@@ -4,9 +4,10 @@ import { useAtom } from 'jotai'
 import { dataEntry } from '../../types/dataTypes'
 import AddModale from '../../components/AddModale/AddModale'
 import { Link } from 'react-router-dom'
+import updateProjects from '../../services/updateProjects'
 
 const Admin: React.FC = () => {
-    const [projects] = useAtom(projectsAtom)
+    const [projects, setProjects] = useAtom(projectsAtom)
 
     const [dataConfig] = useAtom(dataConfigAtom)
 
@@ -16,7 +17,6 @@ const Admin: React.FC = () => {
 
     const handleInput = (e: FormEvent, entry: dataEntry, index: number) => {
         const target = e.target as HTMLFormElement
-        console.log(target.value, entry, index)
 
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
@@ -35,21 +35,48 @@ const Admin: React.FC = () => {
         console.log(projectsData)
     }, [projectsData])
 
+    useEffect(() => {
+        setProjectsData(projects)
+    }, [projects])
+
     const displayModale = () => {
-        console.log('clic')
         setAddModale(!addModale)
+    }
+
+    const handleChangeProject = (
+        e: FormEvent,
+        index: number,
+        action: string
+    ) => {
+        e.preventDefault()
+
+        const atomIndex = projects.findIndex(
+            (project) => project.id === projectsData[index].id
+        )
+
+        const tmpProjects = [...projects]
+
+        action === 'update'
+            ? (tmpProjects[atomIndex] = projectsData[index])
+            : tmpProjects.splice(index, 1)
+
+        setProjects(tmpProjects)
+
+        console.log(action === 'update' ? 'updated' : 'deleted')
+
+        updateProjects(projectsData[index], action)
     }
 
     return (
         <>
-        {addModale && <AddModale close={displayModale} />}
-        <Link to="/">back to home</Link>
+            {addModale && <AddModale close={displayModale} />}
+            <Link to="/">back to home</Link>
             <h1>Admin</h1>
             <button onClick={displayModale}>Nouveau Projet</button>
             {projectsData.map((project, index) => (
                 <form key={'project' + index}>
                     {dataConfig.map((entry, idx) => (
-                        <Fragment key={'project' + index + 'entry' + idx} >
+                        <Fragment key={'project' + index + 'entry' + idx}>
                             <span>
                                 {entry.type === 'string' ? (
                                     <>
@@ -66,18 +93,14 @@ const Admin: React.FC = () => {
                                             name={entry.name + index}
                                             id={entry.name + index}
                                             onInput={(e) =>
-                                                handleInput(
-                                                    e,
-                                                    entry,
-                                                    index
-                                                )
+                                                handleInput(e, entry, index)
                                             }
                                         />
                                     </>
                                 ) : (
                                     <span>
                                         {entry.display}
-                                        {Array.isArray(project[entry.name]) && (
+                                        {Array.isArray(project[entry.name]) &&
                                             (
                                                 project[entry.name] as string[]
                                             ).map(
@@ -100,14 +123,23 @@ const Admin: React.FC = () => {
                                                         }
                                                     />
                                                 )
-                                            )
-                                        )}
+                                            )}
                                     </span>
                                 )}
                             </span>
                             <br />
                         </Fragment>
                     ))}
+                    <button
+                        onClick={(e) => handleChangeProject(e, index, 'update')}
+                    >
+                        update
+                    </button>
+                    <button
+                        onClick={(e) => handleChangeProject(e, index, 'delete')}
+                    >
+                        delete
+                    </button>
                 </form>
             ))}
         </>

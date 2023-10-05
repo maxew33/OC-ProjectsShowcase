@@ -14,7 +14,7 @@ const App = () => {
     const [dataFetched, setDataFetched] = useState(false)
 
     useEffect(() => {
-        const fecthData = async () => {
+        const fetchData = async () => {
             if (!dataFetched) {
                 const callData = new CallData()
 
@@ -24,7 +24,7 @@ const App = () => {
             }
             setDataFetched(true)
         }
-        fecthData()
+        fetchData()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

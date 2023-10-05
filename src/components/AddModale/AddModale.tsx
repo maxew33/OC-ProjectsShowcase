@@ -3,6 +3,7 @@ import React, { FormEvent, Fragment, useState } from 'react'
 import { dataConfigAtom, projectsAtom } from '../../main'
 import { dataFormat, dataEntry } from '../../types/dataTypes'
 import { v4 as uuidv4 } from 'uuid'
+import updateProjects from '../../services/updateProjects'
 
 const AddModale: React.FC<{ close: () => void }> = (
     props
@@ -28,7 +29,6 @@ const AddModale: React.FC<{ close: () => void }> = (
         const target = e.target as HTMLFormElement
         const tmpProjectsData = { ...newProject, [entry.name]: target.value }
 
-        // Mettez à jour l'état projectsData avec la nouvelle valeur
         setNewProject(tmpProjectsData)
     }
 
@@ -45,7 +45,6 @@ const AddModale: React.FC<{ close: () => void }> = (
             [entry.name]: tmpProjectsArray,
         }
 
-        // Mettez à jour l'état projectsData avec la nouvelle valeur
         setNewProject(tmpProjectsData)
     }
 
@@ -66,20 +65,18 @@ const AddModale: React.FC<{ close: () => void }> = (
         index: number
     ) => {
         e.preventDefault()
-        console.log('delete value', index)
         const tmpProjectsArray = [...newProject[entry.name]]
         tmpProjectsArray.splice(index, 1)
         const tmpProjectsData = {
             ...newProject,
             [entry.name]: tmpProjectsArray,
         }
-        console.log(tmpProjectsData)
         setNewProject(tmpProjectsData)
     }
 
     const addProject = () => {
-        console.log('project added')
         setProjects([...projects, { ...newProject, id: uuidv4() }])
+        updateProjects(newProject, 'create')
         props.close()
     }
 
