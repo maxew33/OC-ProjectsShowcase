@@ -5,6 +5,7 @@ import { dataEntry } from '../../types/dataTypes'
 import AddModale from '../../components/AddModale/AddModale'
 import { Link } from 'react-router-dom'
 import updateProjects from '../../services/updateProjects'
+import styles from './Admin.module.css'
 
 const Admin: React.FC = () => {
     const [projects, setProjects] = useAtom(projectsAtom)
@@ -25,6 +26,31 @@ const Admin: React.FC = () => {
         tmpProjectsData[index] = {
             ...tmpProjectsData[index],
             [entry.name]: target.value,
+        }
+
+        // Mettez à jour l'état projectsData avec la nouvelle valeur
+        setProjectsData(tmpProjectsData)
+    }
+
+    const handleArrayInput = (
+        e: FormEvent,
+        entry: dataEntry,
+        index: number,
+        entryIndex: number
+    ) => {
+        const target = e.target as HTMLFormElement
+
+        // Copiez l'ensemble de données actuel de projectsData
+        const tmpProjectsData = [...projectsData]
+
+        const tmpProjectsDataArray = [...tmpProjectsData[index][entry.name]]
+
+        tmpProjectsDataArray[entryIndex] = target.value
+
+        // Mettez à jour la propriété spécifique de tmpProjectsData
+        tmpProjectsData[index] = {
+            ...tmpProjectsData[index],
+            [entry.name]: tmpProjectsDataArray,
         }
 
         // Mettez à jour l'état projectsData avec la nouvelle valeur
@@ -67,11 +93,56 @@ const Admin: React.FC = () => {
         updateProjects(projectsData[index], action)
     }
 
+    const deleteEntry = (
+        e: FormEvent,
+        entry: dataEntry,
+        index: number,
+        entryIndex: number
+    ) => {
+        e.preventDefault()
+        console.log('delete')
+
+        // Copiez l'ensemble de données actuel de projectsData
+        const tmpProjectsData = [...projectsData]
+        const tmpProjectsDataArray = [...tmpProjectsData[index][entry.name]]
+        tmpProjectsDataArray.splice(entryIndex, 1)
+        tmpProjectsData[index] = {
+            ...tmpProjectsData[index],
+            [entry.name]: tmpProjectsDataArray,
+        }
+
+        // Mettez à jour l'état projectsData avec la nouvelle valeur
+        setProjectsData(tmpProjectsData)
+    }
+
+    const newEntry = (e: FormEvent, entry: dataEntry, index: number) => {
+        e.preventDefault()
+        console.log('add')
+
+        // Copiez l'ensemble de données actuel de projectsData
+        const tmpProjectsData = [...projectsData]
+
+        const tmpProjectsDataArray = [...tmpProjectsData[index][entry.name]]
+
+        tmpProjectsDataArray.push('')
+
+        // Mettez à jour la propriété spécifique de tmpProjectsData
+        tmpProjectsData[index] = {
+            ...tmpProjectsData[index],
+            [entry.name]: tmpProjectsDataArray,
+        }
+
+        // Mettez à jour l'état projectsData avec la nouvelle valeur
+        setProjectsData(tmpProjectsData)
+    }
+
     return (
         <>
             {addModale && <AddModale close={displayModale} />}
-            <Link to="/">back to home</Link>
-            <h1>Admin</h1>
+            <h1 className={styles.title}>Admin</h1>
+            <Link to="/" className={styles.backLink}>
+                back to home
+            </Link>
             <button onClick={displayModale}>Nouveau Projet</button>
             {projectsData.map((project, index) => (
                 <form key={'project' + index}>
@@ -105,25 +176,49 @@ const Admin: React.FC = () => {
                                                 project[entry.name] as string[]
                                             ).map(
                                                 (elt: string, idx: number) => (
-                                                    <input
-                                                        type="text"
-                                                        placeholder={elt}
+                                                    <Fragment
                                                         key={
                                                             'project' +
                                                             index +
                                                             'entry' +
                                                             idx
                                                         }
-                                                        onInput={(e) =>
-                                                            handleInput(
-                                                                e,
-                                                                entry,
-                                                                index
-                                                            )
-                                                        }
-                                                    />
+                                                    >
+                                                        <input
+                                                            type="text"
+                                                            placeholder={elt}
+                                                            onInput={(e) =>
+                                                                handleArrayInput(
+                                                                    e,
+                                                                    entry,
+                                                                    index,
+                                                                    idx
+                                                                )
+                                                            }
+                                                        />
+                                                        <button
+                                                            onClick={(e) =>
+                                                                deleteEntry(
+                                                                    e,
+                                                                    entry,
+                                                                    index,
+                                                                    idx
+                                                                )
+                                                            }
+                                                        >
+                                                            x
+                                                        </button>
+                                                        <br />
+                                                    </Fragment>
                                                 )
                                             )}
+                                        <button
+                                            onClick={(e) =>
+                                                newEntry(e, entry, index)
+                                            }
+                                        >
+                                            +
+                                        </button>
                                     </span>
                                 )}
                             </span>
