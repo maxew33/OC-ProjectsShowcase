@@ -2,13 +2,14 @@ import { useAtom } from 'jotai'
 import React, { FormEvent, Fragment, useState } from 'react'
 import { dataConfigAtom, projectsAtom } from '../../main'
 import { dataFormat, dataEntry } from '../../types/dataTypes'
-import { v4 as uuidv4 } from 'uuid'
-import updateProjects from '../../services/updateProjects'
 import styles from './AddModale.module.css'
+import { db } from '../../config/firebase'
+import { addDoc, collection } from 'firebase/firestore'
+import CallData from '../../CallData/CallData'
 
 const AddModale: React.FC<{ close: () => void }> = (props) => {
     const [dataConfig] = useAtom(dataConfigAtom)
-    const [projects, setProjects] = useAtom(projectsAtom)
+    const [, setProjects] = useAtom(projectsAtom)
 
     const [newProject, setNewProject] = useState<dataFormat>({
         id: '',
@@ -73,9 +74,22 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
         setNewProject(tmpProjectsData)
     }
 
-    const addProject = () => {
-        setProjects([...projects, { ...newProject, id: uuidv4() }])
-        updateProjects(newProject, 'create')
+    const addProject = async (e: FormEvent) => {
+        e.preventDefault()
+
+        const fetchData = async () => {
+            const callData = new CallData()
+            const projectsData = await callData.getProjectsData()
+            projectsData && setProjects(projectsData)
+        }
+
+        try {
+            await addDoc(collection(db, 'projects'), newProject)
+            await fetchData()
+        } catch (error) {
+            console.error(error)
+        }
+
         props.close()
     }
 
@@ -145,7 +159,6 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
                                                         X
                                                     </button>
                                                 </span>
-                                                <br />
                                             </Fragment>
                                         )
                                     )}
@@ -153,10 +166,12 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
                         )}
                     </div>
                 ))}
-            </form>
-            <button onClick={props.close}>Cancel</button>
 
-            <button onClick={addProject}>OK</button>
+                <div className={styles.buttonContainer}>
+                    <button onClick={(e) => addProject(e)}>OK</button>
+                    <button onClick={props.close}>Cancel</button>
+                </div>
+            </form>
         </div>
     )
 }

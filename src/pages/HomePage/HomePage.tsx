@@ -87,7 +87,6 @@ const HomePage: React.FC = () => {
                             type="checkbox"
                             name="all"
                             id="all"
-                            // checked={allChecked}
                             onChange={changeAllFilters}
                         />
                         <label
@@ -98,6 +97,7 @@ const HomePage: React.FC = () => {
                         </label>
                     </span>
                     {allTech.map((tech, idx) => (
+                        tech &&
                         <span key={`tech${idx}`}>
                             <input
                                 type="checkbox"

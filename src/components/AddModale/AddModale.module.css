@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
 .modale {
   font-family: "Raleway", sans-serif;
-  position: absolute;
+  position: fixed;
+  z-index: 10;
   display: grid;
   place-content: center;
   top: 0;
@@ -10,10 +11,13 @@
   min-width: 100vw;
   backdrop-filter: blur(5px);
   background: rgba(255, 255, 255, 0.3333333333);
+  overflow-y: scroll;
 }
 
 .form {
   width: min(90vw - 5rem, 1400px - 5rem);
+  max-height: calc(100vh - 5rem);
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -24,10 +28,24 @@
   text-transform: capitalize;
   font-size: 2.5rem;
 }
+.form:last-child {
+  margin-bottom: 1rem;
+}
 
 .formField {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.buttonContainer button {
+  cursor: pointer;
+  width: 5rem;
+  aspect-ratio: 1.5;
+  border-radius: 1rem;
+  text-transform: capitalize;
 }

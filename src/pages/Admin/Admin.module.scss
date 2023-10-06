@@ -8,15 +8,90 @@
     margin-bottom: 3rem;
     text-transform: capitalize;
 }
+
+.links {
+    padding: 1rem 0;
+}
+
 .backLink {
-    position: relative;
-    display: block;
     text-align: right;
-    text-decoration: none;
     color: black;
     font-style: italic;
-    font-family: 'Libre Bodoni', serif;
+    font-family: $font2;
     font-size: 1.25rem;
     text-transform: capitalize;
-    transform: translate(-3rem, -1rem);
+}
+
+.newProject {
+    font-family: $font2;
+    cursor: pointer;
+    font-size: 1.25rem;
+    border: none;
+    text-decoration: underline;
+    background: transparent;
+}
+
+.projectsContainer,
+.links {
+    width: min(95vw, 1400px);
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form {
+    width: min(95vw, 400px);
+    height: 100%;
+    background: $light-grey;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem 1rem;
+    font-family: $font1;
+    font-size: 1rem;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    button {
+        background: white;
+        cursor: pointer;
+        border: 1px solid grey;
+        border-radius: 2px;
+    }
+}
+
+.label {
+    width: 100%;
+    display: block;
+    margin: 0.5rem 0 0.25rem;
+    & button {
+        margin: 0 1rem;
+    }
+}
+.input {
+    width: 80%;
+    & + button {
+        margin: 0 0.5rem;
+    }
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-around;
+    & button {
+        width: 33%;
+        aspect-ratio: 1.5;
+        border-radius: 1rem;
+        text-transform: capitalize;
+    }
+}
+
+.buttonDelete {
+    color: red;
+    background: orange;
+}
+
+.buttonUpdate {
+    color: green;
+    background: greenyellow;
 }

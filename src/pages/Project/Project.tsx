@@ -12,7 +12,7 @@ export const Project: React.FC = () => {
     const [project, setProject] = useState<dataFormat>({
         id: '',
         name: '',
-        illus: '',
+        illustration: '',
         closeup: '',
         techno: [''],
         description: '',
@@ -20,8 +20,9 @@ export const Project: React.FC = () => {
         skills: [''],
         link: '',
         repo: '',
-        comment: '',
+        comment: [''],
     })
+
     //get project id from url
     const params = useParams()
     const projectId = params.projectId
@@ -36,7 +37,9 @@ export const Project: React.FC = () => {
 
     return (
         <>
-        <Link to="/" className={styles.back}>Retour à l'accueil</Link>
+            <Link to="/" className={styles.back}>
+                Retour à l'accueil
+            </Link>
             <main className={styles.projectWrapper}>
                 <section className={styles.presentation}>
                     <h3 className="title">{project.name}</h3>
@@ -49,20 +52,44 @@ export const Project: React.FC = () => {
                         <p className="content">{project.description}</p>
                     </article>
                     <article>
+                        <div className="section">Technologies</div>
+                        <div className="content">
+                            {project.techno.map((elt, idx) => (
+                                <p key={'techno' + idx} className={styles.list}>· {elt}</p>
+                            ))}
+                        </div>
+                    </article>
+                    <article>
                         <div className="section">Objectif</div>
-                        <p className="content">{project.purpose}</p>
+                        <div className="content">
+                            {project.purpose.map((elt, idx) => (
+                                <p key={'purpose' + idx} className={styles.list}>· {elt}</p>
+                            ))}
+                        </div>
                     </article>
                     <article>
                         <div className="section">Compétences</div>
-                        <p className="content">{project.skills}</p>
+                        <div className="content">
+                            {project.skills.map((elt, idx) => (
+                                <p key={'skills' + idx} className={styles.list}>· {elt}</p>
+                            ))}
+                        </div>
                     </article>
                     <article>
                         <div className="section">Evaluation</div>
-                        <p className="content">{project.comment}</p>
+                        <div className="content">
+                            {project.comment.map((elt, idx) => (
+                                <p key={'comment' + idx} className={styles.list}>· {elt}</p>
+                            ))}
+                        </div>
                     </article>
                     <article>
                         <div className="section">Liens</div>
-                        <p className="content">{project.link}</p>
+                        <div className="content">
+                            <a href={project.link}>site</a>
+                            <br />
+                            <a href={project.repo}>github</a>
+                        </div>
                     </article>
                 </section>
             </main>

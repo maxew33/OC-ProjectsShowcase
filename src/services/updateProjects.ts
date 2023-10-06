@@ -7,7 +7,7 @@ const updateProjects = async (project: dataFormat, action: string) => {
     // action: 'create' / 'update' / 'delete'
 
     const docRef = doc(db, 'projects', project.id)
-    const collectionRef = collection(db, 'projects')
+    // const collectionRef = collection(db, 'projects')
 
     switch (action) {
         case 'delete':
@@ -27,8 +27,9 @@ const updateProjects = async (project: dataFormat, action: string) => {
             break
 
         case 'create':
+            console.log('tata')
             try {
-                await addDoc(collectionRef, project)
+                await addDoc(collection(db, 'projects'), project)
             } catch (error) {
                 console.error(error)
             }

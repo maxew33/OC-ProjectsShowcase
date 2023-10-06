@@ -2,7 +2,8 @@
 
 .modale {
     font-family: $font1;
-    position: absolute;
+    position: fixed;
+    z-index: 10;
     display: grid;
     place-content: center;
     top: 0;
@@ -11,10 +12,13 @@
     min-width: 100vw;
     backdrop-filter: blur(5px);
     background: #fff5;
+    overflow-y: scroll;
 }
 
 .form {
     width: min(calc(90vw - 5rem), calc(1400px - 5rem));
+    max-height: calc(100vh - 5rem);
+    overflow: scroll;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -25,11 +29,26 @@
         text-transform: capitalize;
         font-size: 2.5rem;
     }
+
+    &:last-child{
+        margin-bottom: 1rem;
+    }
 }
 
 .formField {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-around;
+    & button {
+        cursor: pointer;
+        width: 5rem;
+        aspect-ratio: 1.5;
+        border-radius: 1rem;
+        text-transform: capitalize;
+    }
 }
