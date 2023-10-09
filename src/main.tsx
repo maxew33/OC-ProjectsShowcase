@@ -15,6 +15,11 @@ export const dataConfigAtom = atom([
         type: 'string',
     },
     {
+        name: 'rank',
+        display: 'rang',
+        type: 'number',
+    },
+    {
         name: 'description',
         display: 'description',
         type: 'string',

@@ -1,6 +1,7 @@
 export const data = [
     {
         id:'001',
+        rank : 1,
         name: 'Booki',
         illustration: '/src/assets/img/p1-snap.png',
         closeup: '/src/assets/img/p1-closeup.png',
@@ -18,6 +19,7 @@ export const data = [
     },
     {
         id:'002',
+        rank: 2,
         name: 'P\'tits plats',
         illustration: '/src/assets/img/p2-snap.png',
         closeup: '/src/assets/img/p2-closeup.png',

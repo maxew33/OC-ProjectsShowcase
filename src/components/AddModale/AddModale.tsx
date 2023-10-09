@@ -14,6 +14,7 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
     const [newProject, setNewProject] = useState<dataFormat>({
         id: '',
         name: '',
+        rank: 1,
         illustration: '',
         closeup: '',
         techno: [''],
@@ -38,7 +39,7 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
         index: number
     ) => {
         const target = e.target as HTMLFormElement
-        const tmpProjectsArray = [...newProject[entry.name]]
+        const tmpProjectsArray = [...(newProject[entry.name] as string[])]
         tmpProjectsArray[index] = target.value
         const tmpProjectsData = {
             ...newProject,
@@ -50,7 +51,7 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
 
     const handleNewValue = (e: FormEvent, entry: dataEntry) => {
         e.preventDefault()
-        const tmpProjectsArray = [...newProject[entry.name]]
+        const tmpProjectsArray = [...(newProject[entry.name] as string[])]
         tmpProjectsArray.push('')
         const tmpProjectsData = {
             ...newProject,
@@ -65,7 +66,7 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
         index: number
     ) => {
         e.preventDefault()
-        const tmpProjectsArray = [...newProject[entry.name]]
+        const tmpProjectsArray = [...(newProject[entry.name] as string[])]
         tmpProjectsArray.splice(index, 1)
         const tmpProjectsData = {
             ...newProject,
@@ -80,7 +81,7 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
         const fetchData = async () => {
             const callData = new CallData()
             const projectsData = await callData.getProjectsData()
-            projectsData && setProjects(projectsData)
+            projectsData && setProjects(projectsData as dataFormat[])
         }
 
         try {
@@ -102,7 +103,7 @@ const AddModale: React.FC<{ close: () => void }> = (props) => {
                         key={'entry-modale' + idx}
                         className={styles.formField}
                     >
-                        {entry.type === 'string' ? (
+                        {entry.type === 'string' || entry.type === 'number' ? (
                             <>
                                 <label htmlFor={'modale' + entry.name}>
                                     {entry.display}

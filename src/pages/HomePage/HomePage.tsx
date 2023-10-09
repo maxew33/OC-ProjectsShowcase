@@ -103,7 +103,6 @@ const HomePage: React.FC = () => {
                                 type="checkbox"
                                 name={tech}
                                 id={tech}
-                                // checked={filtersChecked[tech]}
                                 onChange={changeFilters}
                             />
                             <label

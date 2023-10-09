@@ -1,6 +1,7 @@
 export interface dataFormat {
-    [key: string]: string | string[]
+    [key: string]: string | number | string[]
     id: string
+    rank: number
     name: string
     illustration: string
     closeup: string

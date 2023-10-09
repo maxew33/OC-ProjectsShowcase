@@ -18,6 +18,9 @@ const Admin: React.FC = () => {
 
     const handleInput = (e: FormEvent, entry: dataEntry, index: number) => {
         const target = e.target as HTMLFormElement
+        const value = entry.type === 'string' ? target.value : parseInt(target.value)
+
+        console.log(value, typeof(value))
 
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
@@ -25,7 +28,7 @@ const Admin: React.FC = () => {
         // Mettez à jour la propriété spécifique de tmpProjectsData
         tmpProjectsData[index] = {
             ...tmpProjectsData[index],
-            [entry.name]: target.value,
+            [entry.name]: value,
         }
 
         // Mettez à jour l'état projectsData avec la nouvelle valeur
@@ -43,7 +46,9 @@ const Admin: React.FC = () => {
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
 
-        const tmpProjectsDataArray = [...tmpProjectsData[index][entry.name]]
+        const tmpProjectsDataArray = [
+            ...(tmpProjectsData[index][entry.name] as string[]),
+        ]
 
         tmpProjectsDataArray[entryIndex] = target.value
 
@@ -59,6 +64,7 @@ const Admin: React.FC = () => {
 
     useEffect(() => {
         console.log(projectsData)
+        console.log(typeof(projectsData[0].rank))
     }, [projectsData])
 
     useEffect(() => {
@@ -104,7 +110,9 @@ const Admin: React.FC = () => {
 
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
-        const tmpProjectsDataArray = [...tmpProjectsData[index][entry.name]]
+        const tmpProjectsDataArray = [
+            ...(tmpProjectsData[index][entry.name] as string[]),
+        ]
         tmpProjectsDataArray.splice(entryIndex, 1)
         tmpProjectsData[index] = {
             ...tmpProjectsData[index],
@@ -122,7 +130,9 @@ const Admin: React.FC = () => {
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
 
-        const tmpProjectsDataArray = [...tmpProjectsData[index][entry.name]]
+        const tmpProjectsDataArray = [
+            ...(tmpProjectsData[index][entry.name] as string[]),
+        ]
 
         tmpProjectsDataArray.push('')
 
@@ -155,7 +165,8 @@ const Admin: React.FC = () => {
                         {dataConfig.map((entry, idx) => (
                             <Fragment key={'project' + index + 'entry' + idx}>
                                 <span>
-                                    {entry.type === 'string' ? (
+                                    {entry.type === 'string' ||
+                                    entry.type === 'number' ? (
                                         <>
                                             <label
                                                 htmlFor={entry.name + index}
@@ -164,12 +175,12 @@ const Admin: React.FC = () => {
                                                 {entry.display}
                                             </label>
                                             <input
-                                                type="text"
-                                                value={
-                                                    (project[
-                                                        entry.name
-                                                    ] as string) || ''
+                                                type={
+                                                    entry.type === 'string'
+                                                        ? 'text'
+                                                        : 'number'
                                                 }
+                                                value={project[entry.name]}
                                                 name={entry.name + index}
                                                 id={entry.name + index}
                                                 onInput={(e) =>
@@ -216,9 +227,7 @@ const Admin: React.FC = () => {
                                                         >
                                                             <input
                                                                 type="text"
-                                                                value={
-                                                                    elt
-                                                                }
+                                                                value={elt}
                                                                 onInput={(e) =>
                                                                     handleArrayInput(
                                                                         e,
