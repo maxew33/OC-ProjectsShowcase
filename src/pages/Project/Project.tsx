@@ -11,6 +11,7 @@ export const Project: React.FC = () => {
 
     const [project, setProject] = useState<dataFormat>({
         id: '',
+        rank: 0,
         name: '',
         illustration: '',
         closeup: '',
@@ -86,9 +87,9 @@ export const Project: React.FC = () => {
                     <article>
                         <div className="section">Liens</div>
                         <div className="content">
-                            <a href={project.link}>site</a>
+                            {project.link && <a href={project.link}>site</a>}
                             <br />
-                            <a href={project.repo}>github</a>
+                            {project.repo && <a href={project.repo}>github</a>}
                         </div>
                     </article>
                 </section>

@@ -46,16 +46,20 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
         <article className={styles.article}>
             <Link to={`project/${id}`} className={styles.closeup} />
             <header>
-                <Link to={`project/${id}`}  className={styles.headerLink} >
+                <Link to={`project/${id}`} className={styles.headerLink}>
                     <h3>{name}</h3>
                 </Link>
                 <span className="links">
-                    <a href={link}>
-                        <FontAwesomeIcon icon={faLink} />
-                    </a>
-                    <a href={repo}>
-                        <FontAwesomeIcon icon={faGithub} />
-                    </a>
+                    {link && (
+                        <a href={link}>
+                            <FontAwesomeIcon icon={faLink} />
+                        </a>
+                    )}
+                    {repo && (
+                        <a href={repo}>
+                            <FontAwesomeIcon icon={faGithub} />
+                        </a>
+                    )}
                 </span>
             </header>
 
