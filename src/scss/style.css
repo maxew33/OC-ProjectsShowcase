@@ -62,4 +62,11 @@ body {
   min-height: 100vh;
   margin: auto;
   background: #fff;
+  overflow-x: hidden;
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 12px;
+  }
 }

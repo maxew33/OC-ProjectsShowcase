@@ -34,6 +34,7 @@
 }
 .article .headerLink {
   flex: 1;
+  text-decoration-color: #7451EB;
 }
 .article h3 {
   font-family: "Libre Bodoni", serif;
@@ -48,9 +49,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   font-size: 1.25rem;
   font-family: "Raleway", sans-serif;
 }
 .article footer span {
   margin: 0 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .article {
+    max-width: 80%;
+  }
 }

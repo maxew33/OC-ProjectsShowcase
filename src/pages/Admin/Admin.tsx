@@ -139,7 +139,7 @@ const Admin: React.FC = () => {
 
         setProjectsData(tmpProjectsData)
     }
-    
+
     useEffect(() => {
         setProjectsData(projects)
     }, [projects])
@@ -176,16 +176,24 @@ const Admin: React.FC = () => {
             {addModale && <AddModale close={displayModale} />}
             <h1 className={styles.title}>Admin</h1>
             <section className={styles.links}>
-                <button onClick={displayModale} className={styles.newProject}>
-                    Nouveau Projet
-                </button>
+                {user ? (
+                    <button
+                        onClick={displayModale}
+                        className={styles.newProject}
+                    >
+                        Nouveau Projet
+                    </button>
+                ) : (
+                    <button onClick={logIn}>sign in</button>
+                )}
+
                 <Link to="/" className={styles.backLink}>
                     back to home
                 </Link>
                 {user && <button onClick={logOut}>sign out</button>}
             </section>
 
-            {user ? (
+            {user && (
                 <section className={styles.projectsContainer}>
                     {projectsData.map((project, index) => (
                         <form key={'project' + index} className={styles.form}>
@@ -329,8 +337,6 @@ const Admin: React.FC = () => {
                         </form>
                     ))}
                 </section>
-            ) : (
-                <button onClick={logIn}>sign in</button>
             )}
         </main>
     )

@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
     }, [filtersChecked])
 
     return (
-        <>
+        <main className={styles.projectsWrapper}>
             <section className={styles.filters}>
                 Filtres
                 <span className={styles.filtersWrapper}>
@@ -125,7 +125,7 @@ const HomePage: React.FC = () => {
                         ) && <Card project={project} key={'project' + idx} />
                 )}
             </section>
-        </>
+        </main>
     )
 }
 

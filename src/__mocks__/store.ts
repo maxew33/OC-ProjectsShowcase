@@ -40,7 +40,7 @@ export const data = [
         name: 'Design',
         illustration: '/src/assets/img/p1-snap.png',
         closeup: '/src/assets/img/p1-closeup.png',
-        techno: ['figma', 'react'],
+        techno: ['figma', 'react', 'ts', 'MERN', 'firestore', 'node', 'inkscape'],
         description:
             "intégrer la page d'une plateforme de réservation de vacances",
         purpose: ['Transformer une maquette en site'],

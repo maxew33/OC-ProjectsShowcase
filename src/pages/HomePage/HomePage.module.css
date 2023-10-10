@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
+.projectsWrapper {
+  width: min(100vw, 1440px);
+  overflow-x: hidden;
+}
+
 .filters {
   font-family: "Libre Bodoni", serif;
   font-size: 2rem;
@@ -8,6 +13,7 @@
   justify-content: center;
   gap: 3rem;
   margin: 1.5rem auto;
+  max-width: 100vw;
 }
 .filters input {
   display: none;
@@ -32,6 +38,8 @@
 
 .filtersWrapper {
   display: flex;
+  max-width: 90%;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
 }
