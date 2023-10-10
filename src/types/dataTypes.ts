@@ -14,6 +14,11 @@ export interface dataFormat {
     comment: string[]
 }
 
+export interface moderatorFormat {
+    [key: string]: string 
+    id: string
+    moderator: string
+}
 
 export interface dataEntry {
     name: string

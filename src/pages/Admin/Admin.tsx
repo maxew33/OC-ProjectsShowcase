@@ -1,11 +1,14 @@
 import React, { FormEvent, Fragment, useEffect, useState } from 'react'
 import { dataConfigAtom, projectsAtom } from '../../main'
 import { useAtom } from 'jotai'
-import { dataEntry } from '../../types/dataTypes'
+import { dataEntry, moderatorFormat } from '../../types/dataTypes'
 import AddModale from '../../components/AddModale/AddModale'
 import { Link } from 'react-router-dom'
 import updateProjects from '../../services/updateProjects'
 import styles from './Admin.module.css'
+import { signInWithPopup, signOut } from 'firebase/auth'
+import { auth, db, provider } from '../../config/firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 const Admin: React.FC = () => {
     const [projects, setProjects] = useAtom(projectsAtom)
@@ -16,20 +19,60 @@ const Admin: React.FC = () => {
 
     const [addModale, setAddModale] = useState(false)
 
+    const [user, setUser] = useState('')
+
+    // authentification
+
+    const getModeratorsId = async () => {
+        try {
+            const moderatorsData = await getDocs(collection(db, 'moderators'))
+            const moderators = moderatorsData.docs.map((moderator) => ({
+                ...moderator.data(),
+                id: moderator.id,
+            })) as moderatorFormat[]
+            return moderators
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const logIn = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider)
+            const user = result.user
+            console.log(user, user.uid)
+
+            const moderators = await getModeratorsId()
+
+            moderators?.forEach((moderator) => {
+                if (moderator.moderator.includes(user.uid)) {
+                    setUser(user.displayName ?? '')
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const logOut = async () => {
+        setUser('')
+        await signOut(auth)
+    }
+
+    // project data management
+
     const handleInput = (e: FormEvent, entry: dataEntry, index: number) => {
         const target = e.target as HTMLFormElement
-        const value = entry.type === 'string' ? target.value : parseInt(target.value)
+        const value =
+            entry.type === 'string' ? target.value : parseInt(target.value)
 
-        // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
 
-        // Mettez à jour la propriété spécifique de tmpProjectsData
         tmpProjectsData[index] = {
             ...tmpProjectsData[index],
             [entry.name]: value,
         }
 
-        // Mettez à jour l'état projectsData avec la nouvelle valeur
         setProjectsData(tmpProjectsData)
     }
 
@@ -41,7 +84,6 @@ const Admin: React.FC = () => {
     ) => {
         const target = e.target as HTMLFormElement
 
-        // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
 
         const tmpProjectsDataArray = [
@@ -50,24 +92,59 @@ const Admin: React.FC = () => {
 
         tmpProjectsDataArray[entryIndex] = target.value
 
-        // Mettez à jour la propriété spécifique de tmpProjectsData
         tmpProjectsData[index] = {
             ...tmpProjectsData[index],
             [entry.name]: tmpProjectsDataArray,
         }
 
-        // Mettez à jour l'état projectsData avec la nouvelle valeur
         setProjectsData(tmpProjectsData)
     }
 
+    const deleteEntry = (
+        e: FormEvent,
+        entry: dataEntry,
+        index: number,
+        entryIndex: number
+    ) => {
+        e.preventDefault()
+
+        const tmpProjectsData = [...projectsData]
+        const tmpProjectsDataArray = [
+            ...(tmpProjectsData[index][entry.name] as string[]),
+        ]
+        tmpProjectsDataArray.splice(entryIndex, 1)
+        tmpProjectsData[index] = {
+            ...tmpProjectsData[index],
+            [entry.name]: tmpProjectsDataArray,
+        }
+
+        setProjectsData(tmpProjectsData)
+    }
+
+    const newEntry = (e: FormEvent, entry: dataEntry, index: number) => {
+        e.preventDefault()
+
+        const tmpProjectsData = [...projectsData]
+
+        const tmpProjectsDataArray = [
+            ...(tmpProjectsData[index][entry.name] as string[]),
+        ]
+
+        tmpProjectsDataArray.push('')
+
+        tmpProjectsData[index] = {
+            ...tmpProjectsData[index],
+            [entry.name]: tmpProjectsDataArray,
+        }
+
+        setProjectsData(tmpProjectsData)
+    }
+    
     useEffect(() => {
         setProjectsData(projects)
     }, [projects])
 
-    const displayModale = () => {
-        setAddModale(!addModale)
-    }
-
+    // update the db
     const handleChangeProject = (
         e: FormEvent,
         index: number,
@@ -90,49 +167,8 @@ const Admin: React.FC = () => {
         updateProjects(projectsData[index], action)
     }
 
-    const deleteEntry = (
-        e: FormEvent,
-        entry: dataEntry,
-        index: number,
-        entryIndex: number
-    ) => {
-        e.preventDefault()
-
-        // Copiez l'ensemble de données actuel de projectsData
-        const tmpProjectsData = [...projectsData]
-        const tmpProjectsDataArray = [
-            ...(tmpProjectsData[index][entry.name] as string[]),
-        ]
-        tmpProjectsDataArray.splice(entryIndex, 1)
-        tmpProjectsData[index] = {
-            ...tmpProjectsData[index],
-            [entry.name]: tmpProjectsDataArray,
-        }
-
-        // Mettez à jour l'état projectsData avec la nouvelle valeur
-        setProjectsData(tmpProjectsData)
-    }
-
-    const newEntry = (e: FormEvent, entry: dataEntry, index: number) => {
-        e.preventDefault()
-
-        // Copiez l'ensemble de données actuel de projectsData
-        const tmpProjectsData = [...projectsData]
-
-        const tmpProjectsDataArray = [
-            ...(tmpProjectsData[index][entry.name] as string[]),
-        ]
-
-        tmpProjectsDataArray.push('')
-
-        // Mettez à jour la propriété spécifique de tmpProjectsData
-        tmpProjectsData[index] = {
-            ...tmpProjectsData[index],
-            [entry.name]: tmpProjectsDataArray,
-        }
-
-        // Mettez à jour l'état projectsData avec la nouvelle valeur
-        setProjectsData(tmpProjectsData)
+    const displayModale = () => {
+        setAddModale(!addModale)
     }
 
     return (
@@ -146,131 +182,156 @@ const Admin: React.FC = () => {
                 <Link to="/" className={styles.backLink}>
                     back to home
                 </Link>
+                {user && <button onClick={logOut}>sign out</button>}
             </section>
 
-            <section className={styles.projectsContainer}>
-                {projectsData.map((project, index) => (
-                    <form key={'project' + index} className={styles.form}>
-                        {dataConfig.map((entry, idx) => (
-                            <Fragment key={'project' + index + 'entry' + idx}>
-                                <span>
-                                    {entry.type === 'string' ||
-                                    entry.type === 'number' ? (
-                                        <>
-                                            <label
-                                                htmlFor={entry.name + index}
-                                                className={styles.label}
-                                            >
-                                                {entry.display}
-                                            </label>
-                                            <input
-                                                type={
-                                                    entry.type === 'string'
-                                                        ? 'text'
-                                                        : 'number'
-                                                }
-                                                value={project[entry.name]}
-                                                name={entry.name + index}
-                                                id={entry.name + index}
-                                                onInput={(e) =>
-                                                    handleInput(e, entry, index)
-                                                }
-                                                className={styles.input}
-                                            />
-                                        </>
-                                    ) : (
-                                        <span>
-                                            <span className={styles.label}>
-                                                {entry.display}
-                                                <button
-                                                    onClick={(e) =>
-                                                        newEntry(
+            {user ? (
+                <section className={styles.projectsContainer}>
+                    {projectsData.map((project, index) => (
+                        <form key={'project' + index} className={styles.form}>
+                            {dataConfig.map((entry, idx) => (
+                                <Fragment
+                                    key={'project' + index + 'entry' + idx}
+                                >
+                                    <span>
+                                        {entry.type === 'string' ||
+                                        entry.type === 'number' ? (
+                                            <>
+                                                <label
+                                                    htmlFor={entry.name + index}
+                                                    className={styles.label}
+                                                >
+                                                    {entry.display}
+                                                </label>
+                                                <input
+                                                    type={
+                                                        entry.type === 'string'
+                                                            ? 'text'
+                                                            : 'number'
+                                                    }
+                                                    value={project[entry.name]}
+                                                    name={entry.name + index}
+                                                    id={entry.name + index}
+                                                    onInput={(e) =>
+                                                        handleInput(
                                                             e,
                                                             entry,
                                                             index
                                                         )
                                                     }
-                                                >
-                                                    +
-                                                </button>
-                                            </span>
-                                            {Array.isArray(
-                                                project[entry.name]
-                                            ) &&
-                                                (
-                                                    project[
-                                                        entry.name
-                                                    ] as string[]
-                                                ).map(
+                                                    className={styles.input}
+                                                />
+                                            </>
+                                        ) : (
+                                            <span>
+                                                <span className={styles.label}>
+                                                    {entry.display}
+                                                    <button
+                                                        onClick={(e) =>
+                                                            newEntry(
+                                                                e,
+                                                                entry,
+                                                                index
+                                                            )
+                                                        }
+                                                    >
+                                                        +
+                                                    </button>
+                                                </span>
+                                                {Array.isArray(
+                                                    project[entry.name]
+                                                ) &&
                                                     (
-                                                        elt: string,
-                                                        idx: number
-                                                    ) => (
-                                                        <Fragment
-                                                            key={
-                                                                'project' +
-                                                                index +
-                                                                'entry' +
-                                                                idx
-                                                            }
-                                                        >
-                                                            <input
-                                                                type="text"
-                                                                value={elt}
-                                                                onInput={(e) =>
-                                                                    handleArrayInput(
-                                                                        e,
-                                                                        entry,
-                                                                        index,
-                                                                        idx
-                                                                    )
-                                                                }
-                                                                className={
-                                                                    styles.input
-                                                                }
-                                                            />
-                                                            <button
-                                                                onClick={(e) =>
-                                                                    deleteEntry(
-                                                                        e,
-                                                                        entry,
-                                                                        index,
-                                                                        idx
-                                                                    )
+                                                        project[
+                                                            entry.name
+                                                        ] as string[]
+                                                    ).map(
+                                                        (
+                                                            elt: string,
+                                                            idx: number
+                                                        ) => (
+                                                            <Fragment
+                                                                key={
+                                                                    'project' +
+                                                                    index +
+                                                                    'entry' +
+                                                                    idx
                                                                 }
                                                             >
-                                                                x
-                                                            </button>
-                                                            <br />
-                                                        </Fragment>
-                                                    )
-                                                )}
-                                        </span>
-                                    )}
-                                </span>
-                            </Fragment>
-                        ))}
-                        <div className={styles.buttonContainer}>
-                            <button
-                                onClick={(e) =>
-                                    handleChangeProject(e, index, 'update')
-                                }
-                                className={styles.buttonUpdate}
-                            >
-                                update
-                            </button>
-                            <button
-                                onClick={(e) =>
-                                    handleChangeProject(e, index, 'delete')
-                                }
-                                className={styles.buttonDelete}
-                            >
-                                delete
-                            </button>
-                        </div>
-                    </form>
-                ))}
-            </section>
+                                                                <input
+                                                                    type="text"
+                                                                    value={elt}
+                                                                    onInput={(
+                                                                        e
+                                                                    ) =>
+                                                                        handleArrayInput(
+                                                                            e,
+                                                                            entry,
+                                                                            index,
+                                                                            idx
+                                                                        )
+                                                                    }
+                                                                    className={
+                                                                        styles.input
+                                                                    }
+                                                                    name={
+                                                                        entry.name +
+                                                                        index +
+                                                                        idx
+                                                                    }
+                                                                    id={
+                                                                        entry.name +
+                                                                        index +
+                                                                        idx
+                                                                    }
+                                                                />
+                                                                <button
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
+                                                                        deleteEntry(
+                                                                            e,
+                                                                            entry,
+                                                                            index,
+                                                                            idx
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    x
+                                                                </button>
+                                                                <br />
+                                                            </Fragment>
+                                                        )
+                                                    )}
+                                            </span>
+                                        )}
+                                    </span>
+                                </Fragment>
+                            ))}
+                            <div className={styles.buttonContainer}>
+                                <button
+                                    onClick={(e) =>
+                                        handleChangeProject(e, index, 'update')
+                                    }
+                                    className={styles.buttonUpdate}
+                                >
+                                    update
+                                </button>
+                                <button
+                                    onClick={(e) =>
+                                        handleChangeProject(e, index, 'delete')
+                                    }
+                                    className={styles.buttonDelete}
+                                >
+                                    delete
+                                </button>
+                            </div>
+                        </form>
+                    ))}
+                </section>
+            ) : (
+                <button onClick={logIn}>sign in</button>
+            )}
         </main>
     )
 }
