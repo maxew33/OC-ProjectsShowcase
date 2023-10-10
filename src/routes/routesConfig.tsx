@@ -6,21 +6,21 @@ import App from '../App'
 
 const routesConfig = [
     {
-        path: '/',
+        path: '/OC-ProjectsShowcase/',
         element: <App />,
         errorElement: <ErrorPage />,
         children: [
-            { path: '', element: <HomePage /> },
+            { path: '/OC-ProjectsShowcase/', element: <HomePage /> },
             {
-                path: '/admin',
+                path: '/OC-ProjectsShowcase/admin',
                 element: <Admin />,
             },
             {
-                path: '/project/:projectId',
+                path: '/OC-ProjectsShowcase/project/:projectId',
                 element: <Project />,
             },
             {
-                path: '/error',
+                path: '/OC-ProjectsShowcase/error',
                 element: <ErrorPage />,
             },
         ],
