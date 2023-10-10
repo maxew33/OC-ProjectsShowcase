@@ -3,7 +3,7 @@ import { dataFormat } from '../types/dataTypes'
 import { db } from '../config/firebase'
 
 const updateProjects = async (project: dataFormat, action: string) => {
-    console.log('updateprojects :', project, action)
+
     // action: 'create' / 'update' / 'delete'
 
     const docRef = doc(db, 'projects', project.id)
@@ -27,13 +27,11 @@ const updateProjects = async (project: dataFormat, action: string) => {
             break
 
         case 'create':
-            console.log('tata')
             try {
                 await addDoc(collection(db, 'projects'), project)
             } catch (error) {
                 console.error(error)
             }
-            console.log('add')
     }
 }
 

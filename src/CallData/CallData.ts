@@ -19,7 +19,6 @@ export default class CallData {
                     if (a.rank > b.rank) return 1
                     return 0
                 })
-                console.log(filteredItemsWithRank)
                 return filteredItemsWithRank
             } catch (err) {
                 console.error(err)

@@ -20,8 +20,6 @@ const Admin: React.FC = () => {
         const target = e.target as HTMLFormElement
         const value = entry.type === 'string' ? target.value : parseInt(target.value)
 
-        console.log(value, typeof(value))
-
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
 
@@ -63,11 +61,6 @@ const Admin: React.FC = () => {
     }
 
     useEffect(() => {
-        console.log(projectsData)
-        console.log(typeof(projectsData[0].rank))
-    }, [projectsData])
-
-    useEffect(() => {
         setProjectsData(projects)
     }, [projects])
 
@@ -94,8 +87,6 @@ const Admin: React.FC = () => {
 
         setProjects(tmpProjects)
 
-        console.log(action === 'update' ? 'updated' : 'deleted')
-
         updateProjects(projectsData[index], action)
     }
 
@@ -106,7 +97,6 @@ const Admin: React.FC = () => {
         entryIndex: number
     ) => {
         e.preventDefault()
-        console.log('delete')
 
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
@@ -125,7 +115,6 @@ const Admin: React.FC = () => {
 
     const newEntry = (e: FormEvent, entry: dataEntry, index: number) => {
         e.preventDefault()
-        console.log('add')
 
         // Copiez l'ensemble de données actuel de projectsData
         const tmpProjectsData = [...projectsData]
