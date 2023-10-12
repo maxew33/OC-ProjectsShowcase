@@ -19,19 +19,23 @@ const HomePage: React.FC = () => {
 
     const [allChecked, setAllChecked] = useState(true)
 
-    const [allTech, setAllTech] = useState<string[]>([])
+    const [allTech, setAllTech] = useState<string[]>(['html', 'css', 'scss', 'js', 'ts', 'react', 'figma', 'jest', 'Redux', 'mongo', 'node', 'express'])
 
     useEffect(() => {
-        projects.forEach((project) => {
-            project.techno.forEach((tech) => {
-                setAllTech((prevTech) => {
-                    if (!prevTech.includes(tech)) {
-                        return [...prevTech, tech]
-                    }
-                    return prevTech
-                })
-            })
-        })
+        setAllTech(['html', 'css', 'scss', 'js', 'ts', 'react', 'figma', 'jest', 'Redux', 'mongo', 'node', 'express'])
+
+        // code to get all the techs from the projects (but cannot order them properly !)
+
+        // projects.forEach((project) => {
+        //     project.techno.forEach((tech) => {
+        //         setAllTech((prevTech) => {
+        //             if (!prevTech.includes(tech)) {
+        //                 return [...prevTech, tech]
+        //             }
+        //             return prevTech
+        //         })
+        //     })
+        // })
 
         allTech.forEach((tech) => {
             setFiltersChecked((prevFiltersChecked) => ({
@@ -41,18 +45,23 @@ const HomePage: React.FC = () => {
         })
 
         setFilters(allTech)
-    }, [allTech, projects])
+
+    }, [])
+
+
+    // flitering data 
 
     const changeFilters = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFiltersChecked((prevFiltersChecked) => ({
-            ...prevFiltersChecked,
-            [e.target.id]: !prevFiltersChecked[e.target.id],
-        }))
+        const tmpFilters = {...filtersChecked}
+        Object.keys(tmpFilters).forEach(filter => tmpFilters[filter] = false)
+        tmpFilters[e.target.id]=true
+        setFiltersChecked(tmpFilters)        
+        setAllChecked(false)
     }
 
     const changeAllFilters = () => {
         if (!allChecked) {
-            setAllChecked(!allChecked)
+            setAllChecked(allChecked)
             setFiltersChecked((prevFiltersChecked) => {
                 const updatedFiltersChecked = { ...prevFiltersChecked }
                 for (const key in updatedFiltersChecked) {
@@ -91,7 +100,7 @@ const HomePage: React.FC = () => {
                         />
                         <label
                             htmlFor="all"
-                            className={allChecked ? '' : styles.unchecked}
+                            className={allChecked ? styles.checked : ''}
                         >
                             Tous
                         </label>
@@ -108,7 +117,7 @@ const HomePage: React.FC = () => {
                             <label
                                 htmlFor={tech}
                                 className={
-                                    filtersChecked[tech] ? '' : styles.unchecked
+                                    (filtersChecked[tech] && !allChecked) ? styles.checked : ''
                                 }
                             >
                                 {tech}

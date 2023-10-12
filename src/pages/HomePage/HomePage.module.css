@@ -34,6 +34,11 @@
   top: 100%;
   left: 0;
   transition: 0.25s transform ease-in-out;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.filters label:hover::after, .filters label.checked::after {
+  transform: scaleX(1);
 }
 
 .filtersWrapper {
@@ -42,17 +47,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
-}
-
-.unchecked::after {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: #7451EB;
-  left: 0;
-  transform: translateY(-0.75rem) rotate(-10deg);
 }
 
 .projects {
