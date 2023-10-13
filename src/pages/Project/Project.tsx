@@ -44,7 +44,7 @@ export const Project: React.FC = () => {
             <main className={styles.projectWrapper}>
                 <section className={styles.presentation}>
                     <h3 className="title">{project.name}</h3>
-                    <img src={project.closeup} alt={project.name} />
+                    <img src={`/assets/${project.illustration}-closeup-min.png`} alt={project.name} />
                 </section>
 
                 <section className={styles.description}>

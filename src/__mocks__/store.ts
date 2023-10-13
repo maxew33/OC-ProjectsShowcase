@@ -3,7 +3,7 @@ export const data = [
         id:'001',
         rank : 1,
         name: 'Booki',
-        illustration: '/src/assets/img/p1-snap.png',
+        illustration: 'p1',
         closeup: '/src/assets/img/p1-closeup.png',
         techno: ['html', 'css'],
         description:
@@ -21,7 +21,7 @@ export const data = [
         id:'002',
         rank: 2,
         name: 'P\'tits plats',
-        illustration: '/src/assets/img/p2-snap.png',
+        illustration: 'p2',
         closeup: '/src/assets/img/p2-closeup.png',
         techno: ['html', 'css'],
         description:
@@ -38,7 +38,7 @@ export const data = [
     {
         id:'003',
         name: 'Design',
-        illustration: '/src/assets/img/p1-snap.png',
+        illustration: 'p4',
         closeup: '/src/assets/img/p1-closeup.png',
         techno: ['figma', 'react', 'ts', 'MERN', 'firestore', 'node', 'inkscape'],
         description:

@@ -5,7 +5,7 @@ import { dataFormat } from '../types/dataTypes'
 
 export default class CallData {
     async getProjectsData() {
-        if (import.meta.env.PROD) {
+        if (import.meta.env.DEV) {
             const projectsCollectionRef = collection(db, 'projects')
 
             try {

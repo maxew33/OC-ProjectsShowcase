@@ -63,7 +63,10 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
                 </span>
             </header>
 
-            <img src={illustration} alt={name} className={styles.image} />
+            <img src={`/assets/${illustration}-snap-min.png`} alt={name} className={styles.image} />
+
+
+            {/* <img src={illustration} alt={name} className={styles.image} /> */}
 
             <footer>
                 {techno?.map((tech, idx) => (
