@@ -44,27 +44,40 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
 
     return (
         <article className={styles.article}>
-            <Link to={`project/${id}`} className={styles.closeup} />
+            <Link
+                to={`project/${id}`}
+                className={styles.closeup}
+                aria-label={`${name}`}
+            />
             <header>
                 <Link to={`project/${id}`} className={styles.headerLink}>
-                    <h3>{name}</h3>
+                    <h2>{name}</h2>
                 </Link>
                 <span className="links">
                     {link && (
                         <a href={link}>
-                            <FontAwesomeIcon icon={faLink} />
+                            <FontAwesomeIcon
+                                icon={faLink}
+                                aria-label={`site de ${name}`}
+                            />
                         </a>
                     )}
                     {repo && (
                         <a href={repo}>
-                            <FontAwesomeIcon icon={faGithub} />
+                            <FontAwesomeIcon
+                                icon={faGithub}
+                                aria-label={`repository de ${name}`}
+                            />
                         </a>
                     )}
                 </span>
             </header>
 
-            <img src={`/assets/${illustration}-snap-min.png`} alt={name} className={styles.image} />
-
+            <img
+                src={`/assets/${illustration}-snap-min.png`}
+                alt={name}
+                className={styles.image}
+            />
 
             {/* <img src={illustration} alt={name} className={styles.image} /> */}
 

@@ -46,6 +46,7 @@ const HomePage: React.FC = () => {
 
         setFilters(allTech)
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
