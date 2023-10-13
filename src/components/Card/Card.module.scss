@@ -1,20 +1,27 @@
 @import '../../scss/utils/variables';
 
-.image{
+.image {
+    width: 500px;
     max-width: 80%;
     object-fit: contain;
     margin: 1rem auto;
 }
 
-.closeup{
+.closeup {
     position: absolute;
     top: 0;
     height: 100%;
     width: 100%;
     left: 0;
+    border-radius: inherit;
+    box-shadow: 2.5px 2.5px 5px $grey;
+    transition: 0.125s ease-in-out box-shadow;
+    &:hover {
+        box-shadow: 2.5px 2.5px 5px $purple;
+    }
 }
 
-.article{
+.article {
     position: relative;
     background: $light-grey;
     border-radius: 1rem;
@@ -24,7 +31,7 @@
     padding: 3rem 1.5rem 1rem;
     margin: 2rem auto;
 
-    header{
+    header {
         position: absolute;
         top: 1rem;
         width: calc(100% - 3rem);
@@ -34,23 +41,27 @@
         z-index: 2;
     }
 
-    .headerLink{
+    .headerLink {
         flex: 1;
         text-decoration-color: $purple;
     }
 
-    h3{
+    h3 {
         font-family: $font2;
         font-size: 2.5rem;
     }
 
-    a>*{
+    a > * {
         font-size: 2rem;
         color: black;
-        margin: 0 .25rem;
+        margin: 0 0.25rem;
+        transition: 0.125s color ease-in-out;
+        &:hover {
+            color: $purple;
+        }
     }
-    
-    footer{
+
+    footer {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -58,14 +69,14 @@
         font-size: 1.25rem;
         font-family: $font1;
 
-        span{
-            margin: 0 .75rem;
+        span {
+            margin: 0 0.75rem;
         }
     }
 }
 
-@media (max-width: 768px){
-    .article{
+@media (max-width: 768px) {
+    .article {
         max-width: 80%;
     }
 }
