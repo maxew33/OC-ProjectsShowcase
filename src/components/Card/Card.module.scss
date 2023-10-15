@@ -68,6 +68,10 @@
         flex-wrap: wrap;
         font-size: 1.25rem;
         font-family: $font1;
+        width: 500px;
+        max-width: 80%;
+        line-height: 1.5;
+        margin: auto;
 
         span {
             margin: 0 0.75rem;
