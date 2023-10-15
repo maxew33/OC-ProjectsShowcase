@@ -55,19 +55,13 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
                 </Link>
                 <span className="links">
                     {link && (
-                        <a href={link}>
-                            <FontAwesomeIcon
-                                icon={faLink}
-                                aria-label={`site de ${name}`}
-                            />
+                        <a href={link} aria-label={`site de ${name}`}>
+                            <FontAwesomeIcon icon={faLink} />
                         </a>
                     )}
                     {repo && (
-                        <a href={repo}>
-                            <FontAwesomeIcon
-                                icon={faGithub}
-                                aria-label={`repository de ${name}`}
-                            />
+                        <a href={repo} aria-label={`repository de ${name}`}>
+                            <FontAwesomeIcon icon={faGithub} />
                         </a>
                     )}
                 </span>
