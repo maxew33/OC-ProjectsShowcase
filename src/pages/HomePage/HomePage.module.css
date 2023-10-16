@@ -23,6 +23,7 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
+  font-family: "Raleway", sans-serif;
 }
 .filters label::after {
   content: "";

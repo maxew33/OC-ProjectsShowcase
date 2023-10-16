@@ -69,8 +69,10 @@ const Card: React.FC<{ project: dataFormat }> = ({ project }) => {
 
             <img
                 src={`/assets/${illustration}-snap-min.png`}
+                width="500" height="278"
                 alt={name}
                 className={styles.image}
+
             />
 
             {/* <img src={illustration} alt={name} className={styles.image} /> */}

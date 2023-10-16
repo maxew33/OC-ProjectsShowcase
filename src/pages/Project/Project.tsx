@@ -39,7 +39,7 @@ export const Project: React.FC = () => {
     return (
         <>
             <Link to="/" className={styles.back}>
-                Retour à l'accueil
+                - Retour à l'accueil -
             </Link>
             <main className={styles.projectWrapper}>
                 <section className={styles.presentation}>
@@ -86,10 +86,10 @@ export const Project: React.FC = () => {
                     </article>
                     <article>
                         <div className="section">Liens</div>
-                        <div className="content">
-                            {project.link && <a href={project.link}>site</a>}
+                        <div className="content" >
+                            {project.link && <a href={project.link} className={styles.link}>· site</a>}
                             <br />
-                            {project.repo && <a href={project.repo}>github</a>}
+                            {project.repo && <a href={project.repo} className={styles.link}>· github</a>}
                         </div>
                     </article>
                 </section>
