@@ -1,0 +1,26 @@
+@import '../../scss/utils/variables';
+
+.footer{
+    width: 100%;
+    max-width: 1440px;
+    height: 8rem;
+    margin-top: 3rem;
+    padding: 1rem 0;
+    background: $light-grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-family: $font1;
+    font-size: 1.15rem;
+    color: $purple;
+}
+
+.footerLinks{
+    display: flex;
+    gap:1rem;
+    a{
+        text-decoration: none;
+        color: $purple;
+    }
+}

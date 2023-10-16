@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
+.footer {
+  width: 100%;
+  max-width: 1440px;
+  height: 8rem;
+  margin-top: 3rem;
+  padding: 1rem 0;
+  background: #EBEBEB;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.15rem;
+  color: #7451EB;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1rem;
+}
+.footerLinks a {
+  text-decoration: none;
+  color: #7451EB;
+}

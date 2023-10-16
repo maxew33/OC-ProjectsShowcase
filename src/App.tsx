@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import CallData from './CallData/CallData'
 import Header from './components/Header/Header'
 import { dataFormat } from './types/dataTypes'
+import { Footer } from './components/Footer/Footer'
 
 const App = () => {
     const [, setProjects] = useAtom(projectsAtom)
@@ -47,6 +48,7 @@ const App = () => {
         <>
             <Header />
             {dataFetched && <Outlet />}
+            <Footer />
         </>
     )
 }
