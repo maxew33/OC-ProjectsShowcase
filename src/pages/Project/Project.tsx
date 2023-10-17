@@ -34,6 +34,7 @@ export const Project: React.FC = () => {
     useEffect(() => {
         const idProject = projects.find((elt) => elt.id === projectId)
         idProject ? setProject(idProject) : navigate('/error')
+        window.scrollTo(0, 0)
     }, [navigate, projectId, projects])
 
     return (
@@ -44,7 +45,10 @@ export const Project: React.FC = () => {
             <main className={styles.projectWrapper}>
                 <section className={styles.presentation}>
                     <h3 className="title">{project.name}</h3>
-                    <img src={`/assets/${project.illustration}-closeup-min.png`} alt={project.name} />
+                    <img
+                        src={`/assets/${project.illustration}-closeup-min.png`}
+                        alt={project.name}
+                    />
                 </section>
 
                 <section className={styles.description}>
@@ -56,7 +60,9 @@ export const Project: React.FC = () => {
                         <div className="section">Technologies</div>
                         <div className="content">
                             {project.techno.map((elt, idx) => (
-                                <p key={'techno' + idx} className={styles.list}>· {elt}</p>
+                                <p key={'techno' + idx} className={styles.list}>
+                                    · {elt}
+                                </p>
                             ))}
                         </div>
                     </article>
@@ -64,7 +70,12 @@ export const Project: React.FC = () => {
                         <div className="section">Objectif</div>
                         <div className="content">
                             {project.purpose.map((elt, idx) => (
-                                <p key={'purpose' + idx} className={styles.list}>· {elt}</p>
+                                <p
+                                    key={'purpose' + idx}
+                                    className={styles.list}
+                                >
+                                    · {elt}
+                                </p>
                             ))}
                         </div>
                     </article>
@@ -72,7 +83,9 @@ export const Project: React.FC = () => {
                         <div className="section">Compétences</div>
                         <div className="content">
                             {project.skills.map((elt, idx) => (
-                                <p key={'skills' + idx} className={styles.list}>· {elt}</p>
+                                <p key={'skills' + idx} className={styles.list}>
+                                    · {elt}
+                                </p>
                             ))}
                         </div>
                     </article>
@@ -80,16 +93,29 @@ export const Project: React.FC = () => {
                         <div className="section">Evaluation</div>
                         <div className="content">
                             {project.comment.map((elt, idx) => (
-                                <p key={'comment' + idx} className={styles.list}>· {elt}</p>
+                                <p
+                                    key={'comment' + idx}
+                                    className={styles.list}
+                                >
+                                    · {elt}
+                                </p>
                             ))}
                         </div>
                     </article>
                     <article>
                         <div className="section">Liens</div>
-                        <div className="content" >
-                            {project.link && <a href={project.link} className={styles.link}>· site</a>}
+                        <div className="content">
+                            {project.link && (
+                                <a href={project.link} className={styles.link}>
+                                    · site
+                                </a>
+                            )}
                             <br />
-                            {project.repo && <a href={project.repo} className={styles.link}>· github</a>}
+                            {project.repo && (
+                                <a href={project.repo} className={styles.link}>
+                                    · github
+                                </a>
+                            )}
                         </div>
                     </article>
                 </section>

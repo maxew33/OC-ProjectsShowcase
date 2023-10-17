@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni&family=Raleway:wght@400;900&display=swap");
+.main {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Raleway", sans-serif;
+}
+
+.title {
+  font-size: 7.5rem;
+  letter-spacing: 1.5rem;
+  color: #7451EB;
+}
+
+.text {
+  font-size: 1.25rem;
+}
+
+.link {
+  text-decoration: none;
+  color: #7451EB;
+}
