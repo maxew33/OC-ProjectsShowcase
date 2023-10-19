@@ -2,7 +2,7 @@
 
 ![hrnet banner](https://zupimages.net/up/23/41/0j89.png)
 
-Ce repository contient le code poru présenter l'ensemble des projets que j'ai réalisés au cours de ma formation développeur d'application javascript react.
+Ce repository contient le code pour présenter l'ensemble des projets que j'ai réalisés au cours de ma formation développeur d'application javascript react.
 
 
 ## technologies
@@ -17,7 +17,7 @@ Ce repository contient le code poru présenter l'ensemble des projets que j'ai r
 
 ## Aperçu
 
-![snapshot](https://zupimages.net/up/23/41/g7za.png)
+![snapshot](https://zupimages.net/up/23/42/f7r8.png)
 
 ## Author
 
